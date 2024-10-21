@@ -15,10 +15,6 @@ OHLCVC Builder is a Python package designed to construct OHLCVC (Open, High, Low
 pip install -e .
 
 
-Certainly! Below is a refactored and comprehensive enterprise-grade Python package for building OHLCVC data from trade data. The package is structured to be modular, adheres to SOLID principles, includes detailed docstrings, and is optimized for performance. Concurrency is implemented in a separate module and can be easily adjusted or removed.
-
----
-
 ## Project Structure
 
 ```
@@ -133,27 +129,7 @@ python -m unittest discover tests
 ## License
 
 This project is licensed under the MIT License.
-```
 
----
-
-## `ohlcvc_builder/__init__.py`
-
-```python
-from .builder import OHLCVCBuilder
-```
-
----
-
-**Notes:**
-
-- **Concurrency Module**: The `concurrency.py` module allows for optional concurrency using Python's `concurrent.futures`. By adjusting `ENABLE_CONCURRENCY` and `MAX_WORKERS` in `config.py`, you can enable or disable concurrency and control the number of worker threads.
-- **Modular Design**: The code is organized into modules (`builder.py`, `utils.py`, `concurrency.py`) to enhance maintainability and scalability.
-- **Performance Optimization**: Critical sections of the code are optimized for speed, and concurrency is used where appropriate.
-- **Quality Docstrings**: All classes and functions include detailed docstrings that explain their purpose, parameters, and return values.
-- **Testing**: A basic unit test is provided in `tests/test_builder.py` to ensure that the builder initializes correctly and generates OHLCVC data.
-
----
 
 **How to Run the Package**
 
