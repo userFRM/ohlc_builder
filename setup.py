@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='ohlcvc_builder',
+    name='ohlc_builder',
     version='1.0.1',
     description='A package for building OHLCVC data from trade data with accurate condition handling.',
     author='TalesofThales',
