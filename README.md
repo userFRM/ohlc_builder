@@ -13,7 +13,7 @@ OHLCVC Builder is a Python package designed to construct OHLCVC (Open, High, Low
 
 ```bash
 pip install -e .
-
+```
 
 ## Project Structure
 
