@@ -7,7 +7,7 @@ class TestOHLCVCBuilder(unittest.TestCase):
         # Load data for testing
         self.trade_conditions_df = load_trade_conditions('data/trade_conditions.csv')
         self.exchange_codes_df = load_exchange_codes('data/exchange_codes.csv')
-        self.trades, self.format_columns = load_trade_data('data/sample_trades.json.gz')
+        self.trades, self.format_columns = load_trade_data('data/sample_trades.gz')
 
     def test_builder_initialization(self):
         builder = OHLCVCBuilder(
