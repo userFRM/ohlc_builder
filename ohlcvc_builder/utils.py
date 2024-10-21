@@ -9,18 +9,31 @@ def load_trade_conditions(trade_conditions_path):
     :return: DataFrame containing trade conditions
     """
     try:
-        trade_conditions_df = pd.read_csv(
-            trade_conditions_path,
-            usecols=['Code', 'Name', 'Cancel', 'LateReport', 'AutoExecuted',
-                     'OpenReport', 'Volume', 'High', 'Low', 'Last']
-        )
-        bool_cols = ['Cancel', 'LateReport', 'AutoExecuted', 'OpenReport', 'Volume', 'High', 'Low', 'Last']
+        # Read the CSV without specifying usecols, then normalize column names
+        trade_conditions_df = pd.read_csv(trade_conditions_path)
+        # Normalize column names to lowercase
+        trade_conditions_df.columns = [col.lower() for col in trade_conditions_df.columns]
+        
+        # Define the expected columns in lowercase
+        expected_columns = ['code', 'name', 'cancel', 'latereport', 'autoexecuted', 
+                            'openreport', 'volume', 'high', 'low', 'last']
+        
+        # Check if all expected columns are present
+        missing_columns = set(expected_columns) - set(trade_conditions_df.columns)
+        if missing_columns:
+            logging.error(f"Missing columns in TradeConditions.csv: {missing_columns}")
+            raise ValueError(f"Missing columns in TradeConditions.csv: {missing_columns}")
+        
+        # Keep only the expected columns
+        trade_conditions_df = trade_conditions_df[expected_columns]
+        
+        bool_cols = ['cancel', 'latereport', 'autoexecuted', 'openreport', 'volume', 'high', 'low', 'last']
         for col in bool_cols:
             if col in trade_conditions_df.columns:
                 trade_conditions_df[col] = trade_conditions_df[col].astype(str).str.lower().map({
-                    'true': True,
+                    'true': True, 
                     'false': False,
-                    '*': 'conditional' if col == 'Last' else True
+                    '*': 'conditional' if col == 'last' else True
                 }).fillna(False)
             else:
                 logging.warning(f"Column '{col}' not found in TradeConditions.csv.")
@@ -39,7 +52,11 @@ def load_exchange_codes(exchange_codes_path):
     :return: DataFrame containing exchange codes
     """
     try:
+        # Read the CSV without specifying usecols, then normalize column names
         exchange_codes_df = pd.read_csv(exchange_codes_path)
+        # Normalize column names to lowercase
+        exchange_codes_df.columns = [col.lower() for col in exchange_codes_df.columns]
+        
         logging.info(f"Loaded ExchangeCodes.csv with {len(exchange_codes_df)} entries.")
         return exchange_codes_df
     except Exception as e:
@@ -71,6 +88,8 @@ def load_trade_data(trade_data_path):
         raise KeyError("Trade data is missing 'response' information.")
 
     format_columns = trade_data['header']['format']
+    # Normalize format columns to lowercase
+    format_columns = [col.lower() for col in format_columns]
     trades = trade_data['response']
     logging.info(f"Loaded trade data with {len(trades)} trades.")
     return trades, format_columns
@@ -120,17 +139,17 @@ def merge_trade_conditions(df_trades, trade_conditions_df):
     :return: DataFrame merged with condition flags
     """
     df_trades = df_trades.merge(
-        trade_conditions_df[['Code', 'Last', 'High', 'Low', 'OpenReport', 'Volume', 'Name']],
+        trade_conditions_df[['code', 'last', 'high', 'low', 'openreport', 'volume', 'name']],
         how='left',
         left_on='condition',
-        right_on='Code',
+        right_on='code',
         suffixes=('', '_cond')
     )
-    df_trades.drop(['Code'], axis=1, inplace=True)
-    missing_flags = df_trades['Last'].isna().sum()
+    df_trades.drop(['code'], axis=1, inplace=True)
+    missing_flags = df_trades['last'].isna().sum()
     if missing_flags > 0:
         logging.warning(f"{missing_flags} trades have unrecognized condition codes. Setting flags to False.")
-        df_trades[['Last', 'High', 'Low', 'OpenReport', 'Volume']] = df_trades[['Last', 'High', 'Low', 'OpenReport', 'Volume']].fillna(False)
+        df_trades[['last', 'high', 'low', 'openreport', 'volume']] = df_trades[['last', 'high', 'low', 'openreport', 'volume']].fillna(False)
     else:
         logging.info("All condition codes successfully merged with trade data.")
     return df_trades

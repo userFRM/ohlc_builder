@@ -6,7 +6,7 @@ def main():
     Main function to execute the OHLCVC building process.
     """
     # Define paths to data files
-    trade_data_path = 'data/sample_trades.json.gz'
+    trade_data_path = 'data/sample_trades.gz'
     trade_conditions_path = 'data/trade_conditions.csv'
     exchange_codes_path = 'data/exchange_codes.csv'  # Optional; set to None if not used
 

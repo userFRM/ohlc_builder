@@ -27,8 +27,8 @@ class OHLCVCBuilder:
         self.exchange_codes_df = exchange_codes_df
 
         # Determine eligible conditions and volume_true_conditions
-        self.eligible_conditions = self._determine_conditions('Cancel', False)
-        self.volume_true_conditions = self._determine_conditions('Volume', True)
+        self.eligible_conditions = self._determine_conditions('cancel', False)
+        self.volume_true_conditions = self._determine_conditions('volume', True)
 
         # Create DataFrame from trades
         self.df_trades = self._create_dataframe()
@@ -42,7 +42,7 @@ class OHLCVCBuilder:
         :return: Set of condition codes matching the criteria
         """
         condition_df = self.trade_conditions_df[self.trade_conditions_df[column_name] == value]
-        condition_codes = set(condition_df['Code'].astype(int).unique())
+        condition_codes = set(condition_df['code'].astype(int).unique())
         logging.info(f"Determined {len(condition_codes)} condition codes where {column_name} == {value}.")
         return condition_codes
 
@@ -104,8 +104,8 @@ class OHLCVCBuilder:
         self.df_trades['include_in_low'] = False
 
         # For RTH trades
-        self.df_trades.loc[rth_mask, 'include_in_high'] = eligible_conditions_mask & self.df_trades['High']
-        self.df_trades.loc[rth_mask, 'include_in_low'] = eligible_conditions_mask & self.df_trades['Low']
+        self.df_trades.loc[rth_mask, 'include_in_high'] = eligible_conditions_mask & self.df_trades['high']
+        self.df_trades.loc[rth_mask, 'include_in_low'] = eligible_conditions_mask & self.df_trades['low']
 
         # For non-RTH trades
         self.df_trades.loc[~rth_mask, 'include_in_high'] = eligible_conditions_mask & ~rth_mask
@@ -122,7 +122,7 @@ class OHLCVCBuilder:
         Applies conditional updates to 'include_in_close' flags based on trade conditions and their positions within intervals.
         """
         self.df_trades['include_in_close'] = False
-        self.df_trades.loc[self.df_trades['Last'] == True, 'include_in_close'] = True
+        self.df_trades.loc[self.df_trades['last'] == True, 'include_in_close'] = True
 
         # Define condition codes that require conditional handling
         conditional_condition_codes = {2, 5, 8, 13, 15, 96, 98}
