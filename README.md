@@ -1,10 +1,10 @@
-# OHLCVC Builder
+# OHLC Builder
 
-OHLCVC Builder is a Python package designed to construct OHLCVC (Open, High, Low, Close, Volume, Count) bars from raw trade data with accurate condition handling based on trade conditions and exchange codes.
+OHLC Builder is a Python package designed to construct OHLC (Open, High, Low, Close, Volume, Count) bars from raw trade data with accurate condition handling based on trade conditions and exchange codes.
 
 ## Features
 
-- **Accurate Condition Handling**: Implements detailed logic for trade conditions to ensure high-quality OHLCVC data.
+- **Accurate Condition Handling**: Implements detailed logic for trade conditions to ensure high-quality OHLC data.
 - **Modular Design**: Follows SOLID principles for maintainability and scalability.
 - **Concurrency Support**: Optional concurrency module for performance optimization.
 - **Data Validation**: Comprehensive validation and error handling.
@@ -18,8 +18,8 @@ pip install -e .
 ## Project Structure
 
 ```
-ohlcvc_builder/
-├── ohlcvc_builder
+OHLC_builder/
+├── OHLC_builder
 │   ├── __init__.py
 │   ├── builder.py
 │   ├── concurrency.py
@@ -45,9 +45,9 @@ ohlcvc_builder/
 from setuptools import setup, find_packages
 
 setup(
-    name='ohlcvc_builder',
+    name='OHLC_builder',
     version='1.0.0',
-    description='A package for building OHLCVC data from trade data with accurate condition handling.',
+    description='A package for building OHLC data from trade data with accurate condition handling.',
     author='Your Name',
     author_email='your.email@example.com',
     packages=find_packages(),
@@ -73,13 +73,13 @@ numpy>=1.18.0
 ## `README.md`
 
 ```markdown
-# OHLCVC Builder
+# OHLC Builder
 
-OHLCVC Builder is a Python package designed to construct OHLCVC (Open, High, Low, Close, Volume, Count) bars from raw trade data with accurate condition handling based on trade conditions and exchange codes.
+OHLC Builder is a Python package designed to construct OHLC (Open, High, Low, Close, Volume, Count) bars from raw trade data with accurate condition handling based on trade conditions and exchange codes.
 
 ## Features
 
-- **Accurate Condition Handling**: Implements detailed logic for trade conditions to ensure high-quality OHLCVC data.
+- **Accurate Condition Handling**: Implements detailed logic for trade conditions to ensure high-quality OHLC data.
 - **Modular Design**: Follows SOLID principles for maintainability and scalability.
 - **Concurrency Support**: Optional concurrency module for performance optimization.
 - **Data Validation**: Comprehensive validation and error handling.
@@ -93,8 +93,8 @@ pip install -e .
 ## Usage
 
 ```python
-from ohlcvc_builder import OHLCVCBuilder
-from ohlcvc_builder.utils import load_trade_conditions, load_exchange_codes, load_trade_data
+from OHLC_builder import OHLCBuilder
+from OHLC_builder.utils import load_trade_conditions, load_exchange_codes, load_trade_data
 
 # Load data
 trade_conditions_df = load_trade_conditions('data/trade_conditions.csv')
@@ -102,18 +102,18 @@ exchange_codes_df = load_exchange_codes('data/exchange_codes.csv')
 trades, format_columns = load_trade_data('data/sample_trades.json.gz')
 
 # Initialize builder
-builder = OHLCVCBuilder(
+builder = OHLCBuilder(
     trades=trades,
     format_columns=format_columns,
     trade_conditions_df=trade_conditions_df,
     exchange_codes_df=exchange_codes_df
 )
 
-# Generate OHLCVC data
-ohlcvc = builder.get_ohlcvc(interval='1min')
+# Generate OHLC data
+OHLC = builder.get_OHLC(interval='1min')
 
-# Save or process ohlcvc DataFrame as needed
-ohlcvc.to_csv('data/ohlcvc_output.csv')
+# Save or process OHLC DataFrame as needed
+OHLC.to_csv('data/OHLC_output.csv')
 ```
 
 ## Concurrency
