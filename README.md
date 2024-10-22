@@ -68,28 +68,6 @@ pandas>=1.1.0
 numpy>=1.18.0
 ```
 
----
-
-## `README.md`
-
-```markdown
-# OHLC Builder
-
-OHLC Builder is a Python package designed to construct OHLC (Open, High, Low, Close, Volume, Count) bars from raw trade data with accurate condition handling based on trade conditions and exchange codes.
-
-## Features
-
-- **Accurate Condition Handling**: Implements detailed logic for trade conditions to ensure high-quality OHLC data.
-- **Modular Design**: Follows SOLID principles for maintainability and scalability.
-- **Concurrency Support**: Optional concurrency module for performance optimization.
-- **Data Validation**: Comprehensive validation and error handling.
-
-## Installation
-
-```bash
-pip install -e .
-```
-
 ## Usage
 
 ```python
