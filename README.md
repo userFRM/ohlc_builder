@@ -37,37 +37,6 @@ OHLC_builder/
 └── setup.py
 ```
 
----
-
-## `setup.py`
-
-```python
-from setuptools import setup, find_packages
-
-setup(
-    name='OHLC_builder',
-    version='1.0.0',
-    description='A package for building OHLC data from trade data with accurate condition handling.',
-    author='Your Name',
-    author_email='your.email@example.com',
-    packages=find_packages(),
-    install_requires=[
-        'pandas>=1.1.0',
-        'numpy>=1.18.0',
-    ],
-    python_requires='>=3.7',
-)
-```
-
----
-
-## `requirements.txt`
-
-```
-pandas>=1.1.0
-numpy>=1.18.0
-```
-
 ## Usage
 
 ```python
